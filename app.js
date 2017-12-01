@@ -70,10 +70,45 @@ function fetchCurrencies() {
     .catch(console.log);
 }
 
+function panicLevel(num) {
+	switch(true) {
+		case (num > 20):
+			return "JAG ÄR SÅ JÄVLA BRA PÅ ATT INVESTERA";
+		case (num > 10):
+			return "SHITCCOIN";
+		case (num > 8):
+			return "HAHA NICE";
+		case (num > 5):
+			return "LOOOOOOOL";
+		case (num > 2):
+			return "NOIC";
+		case (num > 1):
+			return "VIND I SEGLEN";
+		case (num >= 0):
+			return "Chill";
+		case (num < -50):
+			return "DÖDEN";
+		case (num < -20):
+			return "HATA ALLT DÖDA ALLA";
+		case (num < -10):
+			return "JORDEN GÅR UNDER";
+		case (num < -5):
+			return "ALLT ÄR KÖRT";
+		case (num < -4):
+			return "KRASCH KOMMER NU";
+		case (num < -3):
+			return "NU ÄR VI NÄRA SLUTET";
+		case (num < -2):
+			return "VAD I HELVETE";
+		default:
+			return "NÅT ÄR FEL";
+	}
+}
+
 client.on('ready', () => {
   fetchCurrencies();
-  fetchXBT();
-  setInterval(fetchXBT, 600000);
+  //fetchXBT();
+  //setInterval(fetchXBT, 600000);
   setInterval(fetchCurrencies, 30000);
 });
 
@@ -135,12 +170,11 @@ client.on('message', async message => {
   }
 
   if (command === 'all') {
-    message.channel.send(` \`CryptoBot3000\`
-    \`\`\`BTC: ${lastValue.btc}    (Since Last: ${(lastValue.btc - previousValue.btc).toFixed(2)}usd | ${(((lastValue.btc / previousValue.btc) - 1) * 100).toFixed(2)}% | 1h: ${cache.btc.percent_change_1h}% | 24h: ${cache.btc.percent_change_24h}% | 7d: ${cache.btc.percent_change_7d}%) 
-XBT: ${lastValue.xtb}      (Since Last: ${(lastValue.xtb - previousValue.xtb).toFixed(2)}sek | ${(((lastValue.xtb / previousValue.xtb) - 1) * 100).toFixed(2)}%)
+    message.channel.send(` \`CryptoBot3000\` \*\*PANIC LEVEL:\*\* \*${panicLevel((((lastValue.btc / previousValue.btc) - 1) * 100).toFixed(0))}\*
+\`\`\`md
+\<BTC: ${lastValue.btc}\>    ([Since Last](${(lastValue.btc - previousValue.btc).toFixed(2)}usd) | ${(((lastValue.btc / previousValue.btc) - 1) * 100).toFixed(2)}% | 1h: ${cache.btc.percent_change_1h}% | 24h: ${cache.btc.percent_change_24h}% | 7d: ${cache.btc.percent_change_7d}%) 
 
-ETH: ${lastValue.eth}      (Since Last: ${(lastValue.eth - previousValue.eth).toFixed(2)}usd | ${(((lastValue.eth / previousValue.eth) - 1) * 100).toFixed(2)}% | 1h: ${cache.eth.percent_change_1h}% | 24h: ${cache.eth.percent_change_24h}% | 7d: ${cache.eth.percent_change_7d}%)
-XBT: ${lastValue.xte}       (Since Last: ${(lastValue.xte - previousValue.xte).toFixed(2)}sek | ${(((lastValue.xte / previousValue.xte) - 1) * 100).toFixed(2)}%)
+\<ETH: ${lastValue.eth}\>      ([Since Last](${(lastValue.eth - previousValue.eth).toFixed(2)}usd) | ${(((lastValue.eth / previousValue.eth) - 1) * 100).toFixed(2)}% | 1h: ${cache.eth.percent_change_1h}% | 24h: ${cache.eth.percent_change_24h}% | 7d: ${cache.eth.percent_change_7d}%)
 \`\`\`
     `);
 
