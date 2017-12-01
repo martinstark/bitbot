@@ -72,6 +72,8 @@ function fetchCurrencies() {
 
 function panicLevel(num) {
 	switch(true) {
+		case (parseFloat(num).toFixed(2) === parseFloat(0.00).toFixed(2)):
+			return "sitt lugnt i båten";
 		case (num > 20):
 			return "JAG ÄR SÅ JÄVLA BRA PÅ ATT INVESTERA";
 		case (num > 10):
@@ -83,9 +85,9 @@ function panicLevel(num) {
 		case (num > 2):
 			return "NOIC";
 		case (num > 1):
-			return "VIND I SEGLEN";
-		case (num >= 0):
-			return "Chill";
+			return "stor bånge";
+		case (num > 0):
+			return "liten bånge";
 		case (num < -50):
 			return "DÖDEN";
 		case (num < -20):
@@ -100,8 +102,10 @@ function panicLevel(num) {
 			return "NU ÄR VI NÄRA SLUTET";
 		case (num < -2):
 			return "VAD I HELVETE";
+		case (num < -1):
+			return "röven KLIAR";
 		default:
-			return "NÅT ÄR FEL";
+			return "myror i brallan";
 	}
 }
 
@@ -170,7 +174,7 @@ client.on('message', async message => {
   }
 
   if (command === 'all') {
-    message.channel.send(` \`CryptoBot3000\` \*\*PANIC LEVEL:\*\* \*${panicLevel((((lastValue.btc / previousValue.btc) - 1) * 100).toFixed(0))}\*
+    message.channel.send(` \`CryptoBot3000\` \*\*PANIC LEVEL:\*\* \*${panicLevel((((lastValue.btc / previousValue.btc) - 1) * 100).toFixed(2))}\*
 \`\`\`md
 \<BTC: ${lastValue.btc}\>    ([Since Last](${(lastValue.btc - previousValue.btc).toFixed(2)}usd) | ${(((lastValue.btc / previousValue.btc) - 1) * 100).toFixed(2)}% | 1h: ${cache.btc.percent_change_1h}% | 24h: ${cache.btc.percent_change_24h}% | 7d: ${cache.btc.percent_change_7d}%) 
 
